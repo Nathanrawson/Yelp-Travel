@@ -23,7 +23,7 @@ var commentRoutes = require("./routes/comments"),
 
 
 
-mongoose.connect("mongodb://localhost/yelp_travel", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://nathanrawson:Manoff123@cluster0-caq63.mongodb.net/test?retryWrites=true", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
