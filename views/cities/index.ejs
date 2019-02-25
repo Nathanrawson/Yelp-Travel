@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+
+
+
+<div class="container">
+<header class="jumbotron">
+   
+ <h1>Welcome to Yelp Travel</h1>
+  
+<p>View our world travel guides</p>
+<p>
+    <a class="btn btn-primary btn-lg" href="/cities/new">Add New City</a>
+
+</p>
+ 
+</header>
+
+<div class="row" style="display:flex; flex-wrap: wrap;">
+
+   <% cities.forEach(function(cities){ %>
+
+    <div class="col-md-3 col-sm-6">
+        
+<div class="thumbnail"  >
+    
+    <img src="<%= cities.image %>">
+    <div class="text-center">
+    <div class="caption">
+        <h4><%= cities.name %></h4>
+    </div>
+   
+    <p>
+        <a href="/cities/<%= cities._id %>" class="btn btn-primary">More Info</a>
+    </p>
+</div>
+</div>
+</div>
+<% }); %>
+
+</div>
+</div>
+
+<% include ../partials/footer %>
