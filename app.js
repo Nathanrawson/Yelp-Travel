@@ -2,7 +2,7 @@ require('dotenv').config();
 var express = require("express");
 var app= express();
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
+var mongoose = require("mongoose" );
 var City = require("./models/city");
 //var comment = require("./models/comment");
 //var seedDB = require("./seeds"); 
@@ -22,7 +22,7 @@ var commentRoutes = require("./routes/comments"),
     
 
 
-
+//mongoose.connect("mongodb://localhost/yelp_travel", { useNewUrlParser: true });
 mongoose.connect("mongodb+srv://nathanrawson:Manoff123@cluster0-caq63.mongodb.net/test?retryWrites=true", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

@@ -21,8 +21,8 @@
                       </p>
                           <% if(currentUser && city.author.id.equals(currentUser._id)){%>
                           <a class="btn btn-default" href="/cities/<%= city._id %>/edit">Edit</a>
-                          <form id="DeleteForm" action="/cities/<%= city._id %>?_method=DELETE" method="POST">
-                             <button class="btn btn-default">Delete</button>
+                          <form action="/cities/<%= city._id %>?_method=DELETE" method="POST">
+                              <input type="submit" class="btn btn-danger" value="Delete">
                               
                           </form>
                    <% } %>

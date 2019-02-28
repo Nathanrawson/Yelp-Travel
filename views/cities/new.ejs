@@ -1,9 +1,10 @@
 <% include ../partials/header %>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
 
-<h1 style="text-align: center">Create a new City</h1>
-<div style="width: 30%; margin: 30px auto;">
+
+<div id="Form-Control" style="width: 30%; margin: 30px auto;">
+    <h1 class="py-3"id="New-City">Create a new City</h1>
 <form action="/cities" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <input class="form-control" type="text" name="city[name]" required placeholder="name">

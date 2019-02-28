@@ -1,11 +1,29 @@
 <% include partials/header %>
-<h1>sign up </h1>
+<link rel="stylesheet" href="/stylesheets/Login.css">
 
-<form action="/register" method="POST">
-    <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-      <button class="btn btn-default">Sign Up</button>
-</form>
+
+
+      <div class="container">
+        <div class="card card-container">
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+          
+            <form class="form-signin"  action="/register" method="POST">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="text" name="username" id="inp" class="form-control" placeholder="username" required autofocus>
+                <input type="password" id="inputPassword" name="password"class="form-control" placeholder="Password" required>
+                <div id="remember" class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Agree to Terms & Conditions
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign up!</button>
+            </form><!-- /form -->
+         
+          
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+
+
 
 
 

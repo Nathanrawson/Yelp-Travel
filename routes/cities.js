@@ -45,31 +45,31 @@ router.get("/", function(req, res){
 
 
 //res.render("cities" ,{cities:cities});
-
+//CREATE ROUTE
 //put all this code inside of the Geocoder call back for google maps 
 router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
-   
-
- cloudinary.uploader.upload(req.file.path, function(result) {
-  // add cloudinary url for the image to the campground object under image property
-  req.body.city.image = result.secure_url;
-  // add author to campground
-  req.body.city.author = {
-    id: req.user._id,
-    username: req.user.username
-  };
-  City.create(req.body.city, function(err, city) {
-    if (err) {
-      req.flash('error', err.message);
-      return res.redirect('back');
-    }
-    res.redirect('/cities/' + city.id);
-  });
-});
-    
-
-   //redirect back to cities page
-   
+    cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
+      if(err) {
+        req.flash('error', err.message);
+        return res.redirect('back');
+      }
+      // add cloudinary url for the image to the campground object under image property
+      req.body.city.image = result.secure_url;
+      // add image's public_id to campground object
+      req.body.city.imageId = result.public_id;
+      // add author to campground
+      req.body.city.author = {
+        id: req.user._id,
+        username: req.user.username
+      };
+      City.create(req.body.city, function(err, city) {
+        if (err) {
+          req.flash('error', err.message);
+          return res.redirect('back');
+        }
+        res.redirect('/cities/' + city.id);
+      });
+    });
 });
 
 router.get("/new" ,middleware.isLoggedIn, function(req, res){
@@ -98,7 +98,7 @@ City.findById(req.params.id).populate("comments").exec(function (err, foundCity)
 
 // Edit City Route
 router.get("/:id/edit" , middleware.checkCityOwnership,function(req, res){
-          City.findById(req.params.id, req.body.city, function(err, foundCity){
+          City.findById(req.params.id, function(err, foundCity){
                 if(err){
         res.redirect("/cities");
                 }else {
@@ -109,29 +109,51 @@ router.get("/:id/edit" , middleware.checkCityOwnership,function(req, res){
  });
 
 // Update City Route
-
-router.put("/:id", middleware.checkCityOwnership, function(req, res){
-// find and update the correct city
-
-City.findByIdAndUpdate(req.params.id, req.body.city, function(err, updatedCity){
-    if(err){
-        res.redirect("/cities");
-    } else {
-        res.redirect("/cities/" + req.params.id);
-    }
-});
-//find and redirect somewher such as the show page.
+router.put("/:id", upload.single('image'), function(req, res){
+    City.findById(req.params.id, async function(err, city){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            if (req.file) {
+              try {
+                  await cloudinary.v2.uploader.destroy(city.imageId);
+                  var result = await cloudinary.v2.uploader.upload(req.file.path);
+                  city.imageId = result.public_id;
+                  city.image = result.secure_url;
+              } catch(err) {
+                  req.flash("error", err.message);
+                  return res.redirect("back");
+              }
+            }
+            city.name = req.body.city.name;
+            city.description = req.body.city.description;
+            city.save();
+            req.flash("success","Successfully Updated!");
+            res.redirect("/cities/" + city._id);
+        }
+    });
 });
 
 // Destroy City route
-router.delete("/:id", middleware.checkCityOwnership, function(req,res){
- City.findByIdAndRemove(req.params.id, function(err){{
-     if (err){
-          res.redirect("/cities");
-     } else {
-         res.redirect("/cities");
-     }
- }});
+router.delete('/:id', function(req, res) {
+  City.findById(req.params.id, async function(err, city) {
+    if(err) {
+      req.flash("error", err.message);
+      return res.redirect("back");
+    }
+    try {
+        await cloudinary.v2.uploader.destroy(city.imageId);
+        city.remove();
+        req.flash('success', 'City deleted successfully!');
+        res.redirect('/city');
+    } catch(err) {
+        if(err) {
+          req.flash("error", err.message);
+          return res.redirect("back");
+        }
+    }
+  });
 });
 
 //middleware
