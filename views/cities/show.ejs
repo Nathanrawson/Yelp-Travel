@@ -54,19 +54,15 @@
                     <form class="delete-form" action="/cities/<%=city._id%>/comments/<%=city._id%>?_method=DELETE" method="POST">
                       <button class="btn btn-sm btn-danger">DELETE</button>
                     </form>
-                  </div>
                   <% } %>
-                </div>
-              </div>
+                        </div>
+                    </div>
+                <% }) %>
             </div>
-          </div>
-        <% }) %>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-</div>
+
 <script>
   function initMap() {
     var lat = <%= city.lat %>;
@@ -78,7 +74,7 @@
         scrollwheel: false
     });
     var contentString = `
-      <strong><%= city.name %><br />
+      <strong> <%= city.name %><br />
       <%= city.location %></strong>
       <p><%= city.description %></p>
     `
@@ -94,5 +90,7 @@
     });
   }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkG51lwJtDvYFKTBdRZlhzYg1D4QFsXPU&callback=initMap"></script>
+
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR3nVCR_82FdiOn4ttx5MJ6S8e2fTp4CI&callback=initMap"
+    async defer></script>
 <% include ../partials/footer %>

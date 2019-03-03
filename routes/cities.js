@@ -92,7 +92,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
         } else {
           //redirect back to campgrounds page
           console.log(newlyCreated);
-          res.redirect("/city");
+          res.redirect("/cities");
         }
       });
     });

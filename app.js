@@ -3,6 +3,7 @@ var express = require("express");
 var app= express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose" );
+mongoose.set("useFindAndModify", false);
 var City = require("./models/city");
 //var comment = require("./models/comment");
 //var seedDB = require("./seeds"); 
