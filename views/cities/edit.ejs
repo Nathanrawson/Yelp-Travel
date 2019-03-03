@@ -7,7 +7,7 @@
         
             <form action="/cities/<%=city._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="cit[name]name" value="<%= city.name %>">
+                    <input class="form-control" type="text" name="city[name]" value="<%= city.name %>">
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>

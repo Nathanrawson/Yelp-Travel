@@ -6,6 +6,9 @@ var citySchema = new mongoose.Schema({
     imageId: String,
     
     description: String,
+    location: String,
+    lat: Number,
+    Lng: Number,
     
     author: {
         id: {

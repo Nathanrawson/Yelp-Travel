@@ -1,79 +1,98 @@
 <% include ../partials/header %>
-<div class="container">
-    <div class ="row"> 
-      <div class="col-md-3">
-          <p class="lead">YelpTravel</p>
-          <div class="list-group">
+<div class="row">
+  <div class="col-md-3">
+       <div class="list-group">
               <li class="list-group-item">Info 1</li>
               <li class="list-group-item">Info 2</li>
               <li class="list-group-item">Info 3</li>
           </div>
-      </div>
-      <div class="col-md-9">
-          <div class="thumbnail">
-              <img class="img-responsive" src="<%= city.image %>">
-              <div class="caption-full">
-                  <h4 class="pull-right">£9.00/night</h4>
-                  <h4><a> <%=city.name%></a></h4>
-                  <p><%= city.description %></p>
-                  <p>
-                      <em>Submitted By <%= city.author.username %></em>
-                      </p>
-                          <% if(currentUser && city.author.id.equals(currentUser._id)){%>
-                          <a class="btn btn-default" href="/cities/<%= city._id %>/edit">Edit</a>
-                          <form action="/cities/<%= city._id %>?_method=DELETE" method="POST">
-                              <input type="submit" class="btn btn-danger" value="Delete">
-                              
-                          </form>
-                   <% } %>
-              </div>
-          </div>
-          <div class="well">
-              <div class="text-right">
-                  <a class="btn btn-success" href="/cities/<%= city._id %>/comments/new">Add new comment</a>
-              </div>
-              <hr>
-              
-              <% city.comments.forEach(function(comment){ %>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <strong><%= comment.author.username %></strong>
-                          <span class="pull-right">10 days ago</span>
-                           <p>
-                              <%= comment.text %>
-                           </p>
-                           <% if(currentUser && comment.author.id.equals(currentUser._id)){%>
-                           <a class="btn btn-xl btn-warning"
-                           href="/cities/<%= city._id %>/comments/<%=comment._id %>/edit">
-                               Edit
-                           </a>
-                           
-                           <form id="DeleteForm" action="/cities/<%= city._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
-                             <button class="btn btn-default">Delete</button>
-                             <% } %>
-                      </div>
-                  </div>
-            
-          <% }) %>
-
-          </div>
+    <div id="map"></div>
+  </div>
+  <div class="col-md-9">
+    <div class="card mb-3">
+         
+      <img class="card-img-top" src="<%= city.image %>" alt="<%= city.name %>">
+      <div class="card-body">
+        <p class="float-right">
+          $<%= city.cost %>/night
+        </p>
+        <h5 class="card-title"><%= city.name %></h5>
+        <p>
+          
+        </p>
+        <hr>
+        <p class="card-text"><%= city.description %></p>
+        <% if(currentUser && city.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+        <a class="btn btn-warning" href="/cities/<%= city._id %>/edit">Edit</a>
+        <form action="/cities/<%= city._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+        <% } %>
       </div>
     </div>
-    
+    <div class="card">
+      <div class="card-body">
+        <div class="text-right">
+          <a class="btn btn-success" href="/cities/<%= city._id %>/comments/new">Add New Comment</a>
+        </div>
+        <hr>
+        <div class="row">
+        <% city.comments.forEach(function(comment){ %>
+          <div class="col-md-12 mb-2">
+            <div class="card">
+              <div class="card-body">
+                <div class="float-left">
+                  <p class="card-title"><%= comment.author.username %></p>
+                  <p class="card-text"><%= comment.text %></p>
+                </div>
+                <div class="float-right">
+                 
+                  
+                  <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                  <div class="float-right">
+                    <a href="/cities/<%=city._id%>/comments/<%=comment._id%>/edit" class="btn btn-sm btn-warning">EDIT</a>
+                    <form class="delete-form" action="/cities/<%=city._id%>/comments/<%=city._id%>?_method=DELETE" method="POST">
+                      <button class="btn btn-sm btn-danger">DELETE</button>
+                    </form>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-<p>
-    
-</p>    
-</p>
-
-
+</div>
+<script>
+  function initMap() {
+    var lat = <%= city.lat %>;
+    var lng = <%= city.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= city.name %><br />
+      <%= city.location %></strong>
+      <p><%= city.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkG51lwJtDvYFKTBdRZlhzYg1D4QFsXPU&callback=initMap"></script>
 <% include ../partials/footer %>

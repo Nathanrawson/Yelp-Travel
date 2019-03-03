@@ -1,9 +1,9 @@
 <% include ../partials/header %>
 <div class="container">
     <div class="row">
-
-<h1 style="text-align: center">Add new comment to <%= city.name %></h1>
 <div style="width: 30%; margin: 30px auto;">
+<h3 style="text-align: center">Add new comment to <%= city.name %></h3>
+
 <form action="/cities/<%= city._id %>/comments" method="POST">
     <div class="form-group">
         <input class="form-control" type="text" name="comment[text]" required placeholder="text">
