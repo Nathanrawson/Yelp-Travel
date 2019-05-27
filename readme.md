@@ -1,4 +1,1 @@
-#YelpCamp
-
-*Add Landing page
-*Add campgrounds page 
+#Yelp Travel, Frist Node Js project to make a clone of yelp 
