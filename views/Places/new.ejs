@@ -4,8 +4,8 @@
 
 
 <div id="Form-Control" style="width: 30%; margin: 30px auto;">
-    <h1 class="py-3"id="New-City">Create a new City</h1>
-<form action="/cities" method="POST" enctype="multipart/form-data">
+    <h1 class="py-3"id="New-City">Add a Place</h1>
+<form action="/cities/<%= city._id %>/places" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <input class="form-control" type="text" name="name" id="name" required placeholder="name">
     </div>
@@ -35,3 +35,8 @@
   </div>
 </div>
 <% include ../partials/footer %>
+
+
+
+
+

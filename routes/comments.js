@@ -55,21 +55,21 @@ router.post("/",  middleware.isLoggedIn, function(req, res){
 });
 
 //comments edit route
-router.get("/:comment_id/edit", function(req, res){
-        Comment.findById(req.params.comment_id, function(err, foundComment){
+router.get("/:commentId/edit", function(req, res){
+        Comment.findById(req.params.commentId, function(err, comment){
             if(err){
                 res.redirect("back");
             }else {
-                res.render("comments/edit",{city_id: req.params.id, comment:foundComment});
+                res.render("comments/edit",{city_id: req.params.id, comment:comment});
             }
         });
    
 });
 
 //comments update ropute
-router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.put("/:commentId", function(req, res){
     //logic
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
+    Comment.findByIdAndUpdate(req.params.commentId, req.body.comment, function(err, updatedComment){
         if(err){
             res.redirect("back");
             console.log(err);
@@ -80,18 +80,27 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
 });
 
 
-router.delete("/:comment_id", middleware.checkCommentOwnership, function(req,res){
- Comment.findByIdAndRemove(req.params.comment_id, function(err){{
+
+
+
+
+
+router.delete("/:commentId" , function(req,res){
+    
+ Comment.findByIdAndRemove(req.params.commentId,function(err){
      if (err){
-          res.redirect("back");
+         console.log("what the");
+         
      } else {
-         res.redirect("back");
+         res.redirect("back" );
      }
- }});
+ });
 });
-//middleware
+
 
 
 
 
 module.exports = router;
+
+

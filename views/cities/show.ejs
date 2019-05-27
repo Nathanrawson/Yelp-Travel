@@ -2,9 +2,15 @@
 <div class="row">
   <div class="col-md-3">
        <div class="list-group">
-              <li class="list-group-item">Info 1</li>
-              <li class="list-group-item">Info 2</li>
-              <li class="list-group-item">Info 3</li>
+         
+         
+         
+          
+          <a href="/" class="list-group-item active">About <%=city.name%></a>
+             <a href="/cities/<%= city._id %>/Places" class="list-group-item">Places to visit in <%=city.name%></a>
+              <a href="" class="list-group-item">Gallery</a>
+         
+         
           </div>
     <div id="map"></div>
   </div>
@@ -51,16 +57,27 @@
                   <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                   <div class="float-right">
                     <a href="/cities/<%=city._id%>/comments/<%=comment._id%>/edit" class="btn btn-sm btn-warning">EDIT</a>
-                    <form class="delete-form" action="/cities/<%=city._id%>/comments/<%=city._id%>?_method=DELETE" method="POST">
+                    <form class="delete-form" action="/cities/<%=city._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                       <button class="btn btn-sm btn-danger">DELETE</button>
-                    </form>
+                        </form>
+                        
+                        
+                        
+                        
+                        
+                        
+                  </div>
                   <% } %>
-                        </div>
-                    </div>
-                <% }) %>
+                </div>
+              </div>
             </div>
+          </div>
+        <% }) %>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 </div>
 
 <script>
@@ -83,7 +100,8 @@
     });
     var marker = new google.maps.Marker({
         position: center,
-        map: map
+        map: map,
+        
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);
@@ -91,6 +109,6 @@
   }
 </script>
 
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR3nVCR_82FdiOn4ttx5MJ6S8e2fTp4CI&callback=initMap"
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM24O6tZenujZE3-SoM8BJDIJlFYqnNMg&callback=initMap"
     async defer></script>
 <% include ../partials/footer %>

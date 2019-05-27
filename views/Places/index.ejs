@@ -1,15 +1,18 @@
 <% include ../partials/header %>
+     
+     
+    
 
 
 
 <div class="container">
 <header class="jumbotron">
    
- <h1>Welcome to Yelp Travel</h1>
+ <h1>Best places to visit in <%= city.name%> </h1>
   
-<p>View our world travel guides</p>
+
 <p>
-    <a class="btn btn-primary btn-lg" href="/cities/new">Add New City</a>
+    <a class="btn btn-primary btn-lg" href="/cities/<%=city.id%>/Places/new">Add your own place</a>
 
 </p>
  
@@ -27,20 +30,21 @@
 
 <div class="row" style="display:flex; flex-wrap: wrap;">
 
-   <% cities.forEach(function(cities){ %>
+   <% city.places.forEach(function(place){ %>
 
     <div class="col-md-3 col-sm-6">
         
 <div class="thumbnail"  >
     
-    <img src="<%= cities.image %>">
+    <img src="<%= place.image %>">
     <div class="text-center">
     <div class="caption td">
-        <h4><%= cities.name %></h4>
+        <h4><%= place.name %></h4>
+        
     </div>
    
     <p>
-        <a href="/cities/<%= cities._id %>" class="btn btn-primary">More Info</a>
+        <a href="/cities/<%=city.id%>/Places/<%=place.id%>" class="btn btn-primary">More Info</a>
     </p>
 </div>
 </div>
@@ -51,4 +55,8 @@
 </div>
 
 <% include ../partials/footer %>
-
+     
+     
+     
+     
+    

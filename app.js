@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose" );
 mongoose.set("useFindAndModify", false);
 var City = require("./models/city");
+
 //var comment = require("./models/comment");
 //var seedDB = require("./seeds"); 
 var Comment = require("./models/comment");
@@ -19,12 +20,12 @@ var flash = require ("connect-flash");
 //requring routes
 var commentRoutes = require("./routes/comments"),
     cityRoutes    = require("./routes/cities"),
-    indexRoutes   = require("./routes");
-    
+    indexRoutes   = require("./routes"),
+    placeRoutes   = require("./routes/Places");
 
 
-//mongoose.connect("mongodb://localhost/yelp_travel", { useNewUrlParser: true });
-mongoose.connect("mongodb+srv://nathanrawson:Manoff123@cluster0-caq63.mongodb.net/test?retryWrites=true", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/yelp_travel", { useNewUrlParser: true });
+//mongoose.connect("mongodb+srv://nathanrawson:Manoff123@cluster0-caq63.mongodb.net/test?retryWrites=true", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -56,8 +57,13 @@ app.use(function(req, res, next){
 app.use("/", indexRoutes);
 app.use("/cities",cityRoutes);
 app.use("/cities/:id/comments", commentRoutes);
+app.use("/cities/:id/Places", placeRoutes );
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("The YelpCamp server is doing its ting");
 });
 
+
+app.get("/*", function(req, res){
+    res.send("oh Baked Patato, this page doesent exist apparently");
+});

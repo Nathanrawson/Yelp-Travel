@@ -72,6 +72,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
   geocoder.geocode(req.body.location, function (err, data) {
     cloudinary.uploader.upload(req.file.path, function(result) {
       // add cloudinary url for the image to the campground object under image property
+     
       image = result.secure_url;
  
       if (err || !data.length) {
@@ -121,7 +122,9 @@ City.findById(req.params.id).populate("comments").exec(function (err, foundCity)
 });
 
    
-
+ 
+   
+// Places route   
 
 // Edit City Route
 router.get("/:id/edit" , middleware.checkCityOwnership,function(req, res){

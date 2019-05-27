@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var citySchema = new mongoose.Schema({
+var placeSchema = new mongoose.Schema({
      //Name Of Campgound
     name: {
         type: String,
@@ -48,24 +48,13 @@ var citySchema = new mongoose.Schema({
         username: String
     },
     
-    comments: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"comment"
-        },
-        
-        ],
-
-        places: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"place"
-        },
-        
-        ],
         
 });
 
 
 
-module.exports = mongoose.model("City", citySchema);
+module.exports = mongoose.model("place", placeSchema);
+
+
+
+
