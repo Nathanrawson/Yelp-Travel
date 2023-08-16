@@ -35,7 +35,7 @@ app.use(flash());
 
 //pasport configuration
 app.use(require("express-session")({
-   secret: "Once again Nathan is a G", 
+   secret: "my very good secret", 
    resave: false,
    saveUninitialized: false
     
@@ -59,7 +59,7 @@ app.use("/cities/:id/comments", commentRoutes);
 app.use("/cities/:id/Places", placeRoutes );
 
 app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("The YelpCamp server is doing its ting");
+    console.log("The YelpCamp server is doing its thing");
 });
 
 
